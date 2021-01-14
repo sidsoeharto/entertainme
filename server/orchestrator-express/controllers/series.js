@@ -40,7 +40,7 @@ class SeriesController {
         popularity: req.body.popularity,
         tags: req.body.tags
       }
-      const series = await axios.post("http://localhost:4001/series", newSeries)
+      const series = await axios.post("http://localhost:4002/series", newSeries)
       await redis.del("series");
       res.status(201).json(series.data)
     } catch (err) {
@@ -52,7 +52,7 @@ class SeriesController {
     try {
       const {id} = req.params
       const { title, overview, poster_path, popularity, tags } = req.body
-      const series = await axios.put(`http://localhost:4001/series/${id}`, {
+      const series = await axios.put(`http://localhost:4002/series/${id}`, {
         title,
         overview,
         poster_path,
@@ -69,7 +69,7 @@ class SeriesController {
   static async deleteSeries(req, res) {
     try {
       const { id } = req.params
-      const series = await axios.delete(`http://localhost:4001/series/${id}`)
+      const series = await axios.delete(`http://localhost:4002/series/${id}`)
       await redis.del('series')
       res.status(200).json(series.data)
     } catch (err) {

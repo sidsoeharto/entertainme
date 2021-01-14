@@ -31,7 +31,7 @@ class MovieModel {
   }
 
   static delete(id) {
-    return Movies.deleteOne({_id: ObjectID(id)})
+    return Movie.deleteOne({_id: ObjectID(id)})
   }
 }
 

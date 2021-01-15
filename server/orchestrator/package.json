@@ -1,5 +1,5 @@
 {
-  "name": "orchestrator-express",
+  "name": "orchestrator",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",

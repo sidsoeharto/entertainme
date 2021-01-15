@@ -4,7 +4,7 @@ const axios = require('axios')
 const Redis = require("ioredis")
 const redis = new Redis()
 const moviesUrl = "http://localhost:4001/movies"
-const seriesUrl = "http://localhost:4002/movies"
+const seriesUrl = "http://localhost:4002/series"
 
 const typeDefs = gql`
   type Movies {
@@ -68,7 +68,7 @@ const resolvers = {
           return JSON.parse(cache)
         } else {
           console.log('from server')
-          const movies = await axios.get("http://localhost:4001/movies")
+          const movies = await axios.get(moviesUrl)
           await redis.set("movies", JSON.stringify(movies.data))
           return movies.data
         }
@@ -80,7 +80,7 @@ const resolvers = {
     moviesById: async (_, args) => {
       try {
         const id = args.id
-        const movie = await axios.get(`http://localhost:4001/movies/${id}`)
+        const movie = await axios.get(`${moviesUrl}/${id}`)
         return movie.data
       } catch (err) {
         console.log(err)
@@ -96,7 +96,7 @@ const resolvers = {
           return JSON.parse(cache)
         } else {
           console.log('from server')
-          const series = await axios.get("http://localhost:4002/series")
+          const series = await axios.get(seriesUrl)
           await redis.set("series", JSON.stringify(series.data))
           return series.data
         }
@@ -108,12 +108,78 @@ const resolvers = {
     seriesById: async (_, args) => {
       try {
         const id = args.id
-        const series = await axios.get(`http://localhost:4002/series/${id}`)
+        const series = await axios.get(`${seriesUrl}/${id}`)
         return series.data
       } catch (err) {
         console.log(err)
       }
     }
+  },
+
+  Mutation: {
+    createMovie: async (_, args) => {
+      try {
+        const newMovie = await axios.post(moviesUrl)
+        await redis.del("movies")
+        return newMovie.data.ops[0]
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    updateMovie: async (_, args) => {
+      try {
+        const { updates, id } = args
+        const movie = await axios.put(`${moviesUrl}/${id}`, updates)
+        await redis.del("movies")
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    deleteMovie: async (_, args) => {
+      try {
+        const id = args.id
+        const movie = await axios.delete(`${moviesUrl}/${id}`)
+        await redis.del("movies")
+        return movie.data
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    createSeries: async (_, args) => {
+      try {
+        const newSeries = await axios.post(seriesUrl)
+        await redis.del("series")
+        return newSeries.data.ops[0]
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    updateSeries: async (_, args) => {
+      try {
+        const { updates, id } = args
+        const series = await axios.put(`${seriesUrl}/${id}`, updates)
+        await redis.del("series")
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    deleteSeries: async (_, args) => {
+      try {
+        const id = args.id
+        const series = await axios.delete(`${seriesUrl}/${id}`)
+        await redis.del("series")
+        return series.data
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+
   }
 }
 

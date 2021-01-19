@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 
 function Navigation () {
   return (
-    <Navbar>
+    <Navbar appearance="inverse">
       <Navbar.Header>
-        <a href="#" className="navbar-brand logo">EntertainMe</a>
+        <p className="navbar-brand logo">EntertainMe</p>
       </Navbar.Header>
       <Navbar.Body>
         <Nav>
@@ -14,6 +14,7 @@ function Navigation () {
           <Link to="/about"><Nav.Item>About</Nav.Item></Link>
           <Link to="/movies"><Nav.Item>Movies</Nav.Item></Link>
           <Link to="/series"><Nav.Item>TV Series</Nav.Item></Link>
+          <Link to="/favorites"><Nav.Item>Favorites</Nav.Item></Link>
         </Nav>
       </Navbar.Body>
     </Navbar>

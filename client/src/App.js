@@ -12,6 +12,7 @@ import Series from './pages/Series'
 import Movies from './pages/Movies'
 import SeriesDetail from './pages/SeriesDetail'
 import MoviesDetail from './pages/MoviesDetail'
+import Favorites from './pages/Favorites'
 
 function App() {
   return (
@@ -23,17 +24,20 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route path="/movies">
+            <Route exact path="/movies">
               <Movies />
             </Route>
             <Route path="/movies/:id">
               <MoviesDetail />
             </Route>
-            <Route path="/series">
+            <Route exact path="/series">
               <Series />
             </Route>
             <Route path="/series/:id">
               <SeriesDetail />
+            </Route>
+            <Route path="Favorites">
+              <Favorites />
             </Route>
           </Switch>
         </Router>

@@ -81,6 +81,7 @@ const resolvers = {
       try {
         const id = args.id
         const movie = await axios.get(`${moviesUrl}/${id}`)
+        console.log(movie.data)
         return movie.data
       } catch (err) {
         console.log(err)
@@ -119,7 +120,7 @@ const resolvers = {
   Mutation: {
     createMovie: async (_, args) => {
       try {
-        const newMovie = await axios.post(moviesUrl)
+        const newMovie = await axios.post(moviesUrl, args.movies)
         await redis.del("movies")
         return newMovie.data.ops[0]
       } catch (err) {
@@ -150,7 +151,7 @@ const resolvers = {
 
     createSeries: async (_, args) => {
       try {
-        const newSeries = await axios.post(seriesUrl)
+        const newSeries = await axios.post(seriesUrl, args.movies)
         await redis.del("series")
         return newSeries.data.ops[0]
       } catch (err) {

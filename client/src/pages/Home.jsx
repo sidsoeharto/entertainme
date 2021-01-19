@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Container, FlexboxGrid, Divider, Icon, Pagination } from 'rsuite';
-import HomeCard from '../components/MovieCard'
+import Card from '../components/Card'
 
 import { gql, useQuery } from '@apollo/client'
 
@@ -30,12 +30,12 @@ function Home () {
   if (error) return <div>{JSON.stringify(error)}</div>
   return (
     <Container>
-      <h1>Welcome to EntertainMe</h1>
+      <h1 style={{ alignSelf: "center" }}>Welcome to EntertainMe</h1>
       <Divider />
       <h3> Movie List </h3>
       <FlexboxGrid justify="space-around">
         {data.movies.map((movie) => {
-          return <HomeCard key={movie._id} content={movie} from={"movies"} />;
+          return <Card key={movie._id} content={movie} from={"movies"} />;
         })}
       </FlexboxGrid>
       <Pagination prev
@@ -50,7 +50,7 @@ function Home () {
       <h3> Series List </h3>
       <FlexboxGrid justify="space-around">
         {data.series.map((serie) => {
-          return <HomeCard key={serie._id} content={serie} from={"series"} />;
+          return <Card key={serie._id} content={serie} from={"series"} />;
         })}
       </FlexboxGrid>
       <Pagination prev
@@ -61,7 +61,6 @@ function Home () {
         pages={10}
         style={{ alignSelf:"center" , marginTop: "20px", marginBottom: "20px"}}
       />
-      <button onClick={() => refetch()}>Refetch!</button>
     </Container>
   )
 }

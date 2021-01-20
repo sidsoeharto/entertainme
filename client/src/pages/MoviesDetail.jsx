@@ -3,7 +3,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { FlexboxGrid, Button, ButtonToolbar, ButtonGroup, Container, Panel, Divider, Modal } from 'rsuite';
 import { Form, FormGroup, FormControl, ControlLabel, InputNumber, HelpBlock } from 'rsuite'
-import { Schema, Alert, Icon } from 'rsuite';
+import { Schema, Alert, Icon, Rate } from 'rsuite';
+import CustomLoader from '../components/CustomLoader'
 
 const GET_DETAIL_MOVIE = gql`
   query moviesById($id: String!) {
@@ -143,7 +144,7 @@ function MoviesDetail () {
     tags: StringType()
   })
 
-  if(loading) return (<div>Loading...</div>)
+  if(loading) return (<CustomLoader />)
   if (error) return (<div>{JSON.stringify(error)}</div>)
   return (
     <FlexboxGrid style={{ marginTop: "75px" }}>
@@ -231,7 +232,7 @@ function MoviesDetail () {
           <h6>{data.moviesById.overview}</h6>
           <Divider />
           <h5>Popularity:</h5>
-          <h6>{data.moviesById.popularity}</h6>
+          <Rate defaultValue={(data.moviesById.popularity/2)} allowHalf readOnly/><h6>{data.moviesById.popularity}</h6>
           <Divider />
           <h5>Tags:</h5>
           {data.moviesById.tags.map((el) => {

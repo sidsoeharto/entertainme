@@ -1,5 +1,5 @@
 const db = require("../config/mongo")
-const Series = db.collection("series")
+const Series = db.collection(process.env.COLLECTION_NAME || "series")
 const {ObjectID} = require("mongodb")
 
 class SeriesModel {

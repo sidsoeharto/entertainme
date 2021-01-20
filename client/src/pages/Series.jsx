@@ -3,6 +3,7 @@ import { Container, FlexboxGrid, Divider, Icon, Pagination, Button, ButtonToolba
 import { gql, useQuery, useMutation } from "@apollo/client"
 import { Form, FormGroup, FormControl, ControlLabel, InputNumber, HelpBlock } from 'rsuite'
 import { Schema, Alert } from 'rsuite';
+import CustomLoader from '../components/CustomLoader';
 
 import Card from '../components/Card'
 
@@ -122,7 +123,7 @@ function Series () {
 
   const { loading, error, data, refetch } = useQuery(GET_SERIES)
 
-  if (loading) return (<Container justify="center"><Icon icon="spinner" spin size="5x"/></Container>)
+  if (loading) return (<CustomLoader />)
   if (error) return <div>{JSON.stringify(error)}</div>
   return (
     <Container style={{ margin:'2rem' }}>

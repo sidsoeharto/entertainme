@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Container, FlexboxGrid, Divider, Icon, Pagination } from 'rsuite';
 import Card from '../components/Card'
+import CustomLoader from '../components/CustomLoader'
 
 import { gql, useQuery } from '@apollo/client'
 
@@ -26,7 +27,7 @@ function Home () {
     refetch()
   }, [data])
 
-  if (loading) return (<Container justify="center"><Icon icon="spinner" spin size="5x"/></Container>)
+  if (loading) return (<CustomLoader />)
   if (error) return <div>{JSON.stringify(error)}</div>
   return (
     <Container style={{ margin:'2rem' }}>

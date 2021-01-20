@@ -3,7 +3,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { FlexboxGrid, Button, ButtonToolbar, ButtonGroup, Container, Panel, Divider, Modal } from 'rsuite';
 import { Form, FormGroup, FormControl, ControlLabel, InputNumber, HelpBlock } from 'rsuite'
-import { Schema, Alert, Icon } from 'rsuite';
+import { Schema, Alert, Icon, Rate } from 'rsuite';
+import CustomLoader from '../components/CustomLoader'
 
 const GET_DETAIL_SERIES = gql`
   query seriesById($id: String!) {
@@ -143,7 +144,7 @@ function SeriesDetail () {
     tags: StringType()
   })
 
-  if(loading) return (<div>Loading...</div>)
+  if(loading) return (<CustomLoader />)
   if (error) return (<div>{JSON.stringify(error)}</div>)
   return (
     <FlexboxGrid style={{ marginTop: "75px" }}>
@@ -216,7 +217,7 @@ function SeriesDetail () {
         </Modal.Footer>
       </Modal>
       <FlexboxGrid.Item colspan={8}>
-        <Panel shaded bodyFill style={{width: "300px", justifyContent: "center", marginLeft: "75px"}}>
+        <Panel shaded bodyFill style={{width: "300px", justifyContent: "center", marginLeft: "2rem"}}>
           <img 
             style={{ width: "300px" }}
             src={data.seriesById.poster_path}
@@ -224,14 +225,14 @@ function SeriesDetail () {
         </Panel>
       </FlexboxGrid.Item>
       <FlexboxGrid.Item colspan={16}>
-        <Panel shaded>
+        <Panel shaded style={{ marginLeft:"4rem", marginRight:"2rem", marginBottom:"4rem"}}>
           <h3>{data.seriesById.title}</h3>
           <Divider />
           <h5>Overview:</h5>
           <h6>{data.seriesById.overview}</h6>
           <Divider />
           <h5>Popularity:</h5>
-          <h6>{data.seriesById.popularity}</h6>
+          <Rate defaultValue={(data.seriesById.popularity/2)} allowHalf readOnly/><h6>{data.seriesById.popularity}</h6>
           <Divider />
           <h5>Tags:</h5>
           {data.seriesById.tags.map((el) => {

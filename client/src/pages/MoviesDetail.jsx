@@ -3,8 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { gql, useQuery, useMutation } from '@apollo/client';
 import { FlexboxGrid, Button, ButtonToolbar, ButtonGroup, Container, Panel, Divider, Modal } from 'rsuite';
 import { Form, FormGroup, FormControl, ControlLabel, InputNumber, HelpBlock } from 'rsuite'
-import { Schema } from 'rsuite';
-import Select from 'react-select'
+import { Schema, Alert, Icon } from 'rsuite';
 
 const GET_DETAIL_MOVIE = gql`
   query moviesById($id: String!) {
@@ -68,8 +67,10 @@ function MoviesDetail () {
   })
 
   const [updateMovie] = useMutation(UPDATE_MOVIE)
+  const [deleteMovie] = useMutation(DELETE_MOVIE)
 
   const [show, setShow] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
 
   const handleClose = () => setShow(false)
   const handleShow = () => {
@@ -110,8 +111,16 @@ function MoviesDetail () {
       }
     })
 
+    Alert.success("Success updating movie")
     refetch()
-    handleClose()
+    
+  }
+
+  async function deleteHandler(e) {
+    await deleteMovie({ variables: { id }})
+    refetch();
+    Alert.success("Success deleting movie")
+    history.goBack()
   }
 
   let { loading, error, data, refetch } = useQuery(GET_DETAIL_MOVIE, {
@@ -185,6 +194,27 @@ function MoviesDetail () {
           </Form>
         </Modal.Body>
       </Modal>
+      <Modal backdrop="static" show={showDelete} onHide={() => setShowDelete(false)} size="xs">
+        <Modal.Body>
+          <Icon
+            icon="remind"
+            style={{
+              color: '#ffb300',
+              fontSize: 24
+            }}
+          />
+          {'  '}
+          Are you sure you want to delete this movie?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={deleteHandler} appearance="primary">
+            Yes
+          </Button>
+          <Button onClick={() => setShowDelete(false)} appearance="subtle">
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <FlexboxGrid.Item colspan={8}>
         <Panel shaded bodyFill style={{width: "300px", justifyContent: "center", marginLeft: "75px"}}>
           <img 
@@ -204,19 +234,22 @@ function MoviesDetail () {
           <h6>{data.moviesById.popularity}</h6>
           <Divider />
           <h5>Tags:</h5>
-          <Select
-            isMulti
-            isClearable={false}
-            defaultValue={data.moviesById.tags}
-            options={data.moviesById.tags}
-            className="basic-multi-select"
-            classNamePrefix="select"
-          />
+          {data.moviesById.tags.map((el) => {
+            return (
+              <Button
+                disabled
+                appearance="subtle"
+                key={el}
+              >
+                {el}
+              </Button>
+            );
+          })}
           <Divider />
           <ButtonToolbar>
             <ButtonGroup>
               <Button appearance="ghost" onClick={handleShow}>Edit</Button>
-              <Button appearance="ghost">Delete</Button>
+              <Button appearance="ghost" onClick={() => setShowDelete(true)}>Delete</Button>
             </ButtonGroup>
           </ButtonToolbar>
         </Panel>

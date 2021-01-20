@@ -24,14 +24,6 @@ const CREATE_MOVIE = gql`
   }
 `
 
-const DELETE_MOVIE = gql`
-  mutation deleteMovie($id: String) {
-    deleteMovie(id: $id) {
-      _id
-    }
-  }
-`
-
 class CustomField extends React.PureComponent {
   render() {
     const { name, message, label, accepter, error, ...props } = this.props;
@@ -83,19 +75,23 @@ function Movies () {
       }
     })
 
-    // setInputTitle('')
-    // setInputOverview('')
-    // setInputPoster('')
-    // setInputPopularity(0)
-    // setInputTags([])
-    // setShow(false)
+    setInputTitle('')
+    setInputOverview('')
+    setInputPoster('')
+    setInputPopularity(0)
+    setInputTags([])
+    setShow(false)
   }
 
-  function deleteMovie () {
 
+  const handleClose = () => {
+    setInputTitle('')
+    setInputOverview('')
+    setInputPoster('')
+    setInputPopularity(0)
+    setInputTags([])
+    setShow(false)
   }
-
-  const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
   
   const handleTitle = (e) => {
@@ -128,7 +124,7 @@ function Movies () {
   if (loading) return (<Container justify="center"><Icon icon="spinner" spin size="5x"/></Container>)
   if (error) return <div>{JSON.stringify(error)}</div>
   return (
-    <Container>
+    <Container style={{ margin:'2rem' }}>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>Add Movies</Modal.Title>
@@ -183,10 +179,10 @@ function Movies () {
         </Modal.Body>
       </Modal>
       <h1 style={{ alignSelf: "center"}}>EntertainMe Movies</h1>
-      <Divider />
-      <ButtonToolbar style={{ alignSelf: "center" }}>
+      <ButtonToolbar style={{ alignSelf: "center", marginTop:'1rem'}}>
         <Button appearance="primary" onClick={handleShow}>Add Movie</Button>
       </ButtonToolbar>
+      <Divider />
       <FlexboxGrid justify="space-around">
         {data.movies.map((movie) => {
           return <Card key={movie._id} content={movie} from={"movies"} />;

@@ -151,7 +151,7 @@ const resolvers = {
 
     createSeries: async (_, args) => {
       try {
-        const newSeries = await axios.post(seriesUrl, args.movies)
+        const newSeries = await axios.post(seriesUrl, args.series)
         await redis.del("series")
         return newSeries.data.ops[0]
       } catch (err) {

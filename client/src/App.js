@@ -36,7 +36,7 @@ function App() {
             <Route path="/series/:id">
               <SeriesDetail />
             </Route>
-            <Route path="Favorites">
+            <Route path="/favorites">
               <Favorites />
             </Route>
           </Switch>

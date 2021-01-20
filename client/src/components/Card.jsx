@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import { Panel, Button, ButtonGroup, ButtonToolbar } from 'rsuite'
+import { Panel, Button, ButtonGroup, ButtonToolbar, Alert } from 'rsuite'
 import { favoritesVar } from "../cache"
 import { useHistory } from 'react-router-dom'
 
@@ -9,14 +9,13 @@ function Card ({ content, from, favorite }) {
   const addFavorites = (data) => {
     const prevData = favoritesVar()
     if (!prevData.some(el => el._id == data._id)) {
-      if (from === "movies") {
-        favoritesVar([data, ...prevData])
-      } else {
-        favoritesVar([data, ...prevData])
-      }
+      favoritesVar([data, ...prevData])
+      Alert.success("Added to favorites")
+    } else {
+      Alert.error("Already added to favorites")
     }
-    console.log(favoritesVar)
   }
+
 
   const history = useHistory()
   

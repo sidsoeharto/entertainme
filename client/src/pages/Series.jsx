@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, FlexboxGrid, Divider, Icon, Pagination, Button, ButtonToolbar, Modal } from 'rsuite';
 import { gql, useQuery, useMutation } from "@apollo/client"
 import { Form, FormGroup, FormControl, ControlLabel, InputNumber, HelpBlock } from 'rsuite'
-import { Schema } from 'rsuite';
+import { Schema, Alert } from 'rsuite';
 
 import Card from '../components/Card'
 
@@ -74,6 +74,8 @@ function Series () {
         }
       }
     })
+
+    Alert.success("Series added sucessfully")
 
     setInputTitle('')
     setInputOverview('')
@@ -179,7 +181,7 @@ function Series () {
       </Modal>
       <h1 style={{ alignSelf: "center"}}>EntertainMe Series</h1>
       <ButtonToolbar style={{ alignSelf: "center", marginTop:'1rem'}}>
-        <Button appearance="primary" onClick={handleShow}>Add Movie</Button>
+        <Button appearance="primary" onClick={handleShow}>Add Series</Button>
       </ButtonToolbar>
       <Divider />
       <FlexboxGrid justify="space-around">

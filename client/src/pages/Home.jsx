@@ -29,10 +29,10 @@ function Home () {
   if (loading) return (<Container justify="center"><Icon icon="spinner" spin size="5x"/></Container>)
   if (error) return <div>{JSON.stringify(error)}</div>
   return (
-    <Container>
+    <Container style={{ margin:'2rem' }}>
       <h1 style={{ alignSelf: "center" }}>Welcome to EntertainMe</h1>
       <Divider />
-      <h3> Movie List </h3>
+      <h3 style={{ alignSelf: "center", margin:'2rem' }}> Movie List </h3>
       <FlexboxGrid justify="space-around">
         {data.movies.map((movie) => {
           return <Card key={movie._id} content={movie} from={"movies"} />;
@@ -47,7 +47,7 @@ function Home () {
         style={{ alignSelf:"center" , marginTop: "20px"}}
       />
       <Divider />
-      <h3> Series List </h3>
+      <h3 style={{ alignSelf: "center", margin:'2rem' }}> Series List </h3>
       <FlexboxGrid justify="space-around">
         {data.series.map((serie) => {
           return <Card key={serie._id} content={serie} from={"series"} />;

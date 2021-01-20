@@ -113,7 +113,7 @@ function SeriesDetail () {
 
     Alert.success("Success updating series")
     refetch()
-    
+    handleClose()
   }
 
   async function deleteHandler(e) {

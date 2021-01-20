@@ -113,7 +113,7 @@ function MoviesDetail () {
 
     Alert.success("Success updating movie")
     refetch()
-    
+    handleClose()
   }
 
   async function deleteHandler(e) {

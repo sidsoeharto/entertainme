@@ -9,7 +9,7 @@ const client = new ApolloClient({
         fields: {
           favorites: {
             read() {
-              return favoritesVar
+              return favoritesVar()
             }
           }
         }

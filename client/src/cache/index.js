@@ -1,3 +1,3 @@
 import { makeVar } from "@apollo/client"
 
-export const favoritesVar = makeVar(['sasuke'])
+export const favoritesVar = makeVar([])
